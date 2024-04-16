@@ -15,12 +15,18 @@ def element(by, value, parent, timeout=10):
 
 def main():
     options = Options()
-    options.add_argument(
-        "user-data-dir="
-        + os.path.join(
-            os.getenv("LOCALAPPDATA"), "Google", "Chrome", "User Data"
-        )
-    )
+    if os.name == 'nt':
+      options.add_argument(
+          "user-data-dir="
+          + os.path.join(
+              os.getenv("LOCALAPPDATA"), "Google", "Chrome", "User Data"
+          )
+      )
+    elif os.name == 'posix':
+        options.add_argument(
+        "user-data-dir="+(os.path.expanduser("~/"))+".config/google-chrome"
+		)
+        
     service = Service()
     driver = Chrome(options, service)
     driver.get("https://www.payback.de/coupons")
