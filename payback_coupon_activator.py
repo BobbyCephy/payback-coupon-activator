@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 import os
+import platform
 
 
 def element(by, value, parent, timeout=10):
@@ -14,7 +15,7 @@ def element(by, value, parent, timeout=10):
 
 
 def main():
-    if os.name == "nt":
+    if platform.system() == "Windows":
         user_data_dir = (
             os.getenv("LOCALAPPDATA"),
             "Google",
@@ -22,7 +23,7 @@ def main():
             "User Data",
         )
 
-    elif os.name == "posix":
+    elif platform.system() == "Linux":
         user_data_dir = (
             os.path.expanduser("~"),
             ".config",
