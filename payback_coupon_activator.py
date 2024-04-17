@@ -30,6 +30,15 @@ def main():
             "google-chrome",
         )
 
+    elif platform.system() == "Darwin":
+        user_data_dir = (
+            os.path.expanduser("~"),
+            "Library",
+            "Application Support",
+            "Google",
+            "Chrome",
+        )
+
     options = Options()
     options.add_argument("user-data-dir=" + os.path.join(user_data_dir))
 
