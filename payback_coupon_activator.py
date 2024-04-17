@@ -15,7 +15,7 @@ def element(by, value, parent, timeout=10):
 
 def main():
     if os.name == "nt":
-        user_data_dir = os.path.join(
+        user_data_dir = (
             os.getenv("LOCALAPPDATA"),
             "Google",
             "Chrome",
@@ -23,10 +23,14 @@ def main():
         )
 
     elif os.name == "posix":
-        user_data_dir = os.path.expanduser("~/") + ".config/google-chrome"
+        user_data_dir = (
+            os.path.expanduser("~"),
+            ".config",
+            "google-chrome",
+        )
 
     options = Options()
-    options.add_argument("user-data-dir=" + user_data_dir)
+    options.add_argument("user-data-dir=" + os.path.join(user_data_dir))
 
     service = Service()
     driver = Chrome(options, service)
