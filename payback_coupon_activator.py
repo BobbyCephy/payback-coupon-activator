@@ -14,20 +14,19 @@ def element(by, value, parent, timeout=10):
 
 
 def main():
-    options = Options()
     if os.name == "nt":
-        options.add_argument(
-            "user-data-dir="
-            + os.path.join(
-                os.getenv("LOCALAPPDATA"), "Google", "Chrome", "User Data"
-            )
+        user_data_dir = os.path.join(
+            os.getenv("LOCALAPPDATA"),
+            "Google",
+            "Chrome",
+            "User Data",
         )
+
     elif os.name == "posix":
-        options.add_argument(
-            "user-data-dir="
-            + (os.path.expanduser("~/"))
-            + ".config/google-chrome"
-        )
+        user_data_dir = os.path.expanduser("~/") + ".config/google-chrome"
+
+    options = Options()
+    options.add_argument("user-data-dir=" + user_data_dir)
 
     service = Service()
     driver = Chrome(options, service)
