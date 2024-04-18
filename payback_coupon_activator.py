@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 import os
+import platform
 
 
 def element(by, value, parent, timeout=10):
@@ -14,13 +15,33 @@ def element(by, value, parent, timeout=10):
 
 
 def main():
-    options = Options()
-    options.add_argument(
-        "user-data-dir="
-        + os.path.join(
-            os.getenv("LOCALAPPDATA"), "Google", "Chrome", "User Data"
+    if platform.system() == "Windows":
+        user_data_dir = (
+            os.getenv("LOCALAPPDATA"),
+            "Google",
+            "Chrome",
+            "User Data",
         )
-    )
+
+    elif platform.system() == "Linux":
+        user_data_dir = (
+            os.path.expanduser("~"),
+            ".config",
+            "google-chrome",
+        )
+
+    elif platform.system() == "Darwin":
+        user_data_dir = (
+            os.path.expanduser("~"),
+            "Library",
+            "Application Support",
+            "Google",
+            "Chrome",
+        )
+
+    options = Options()
+    options.add_argument("user-data-dir=" + os.path.join(user_data_dir))
+
     service = Service()
     driver = Chrome(options, service)
     driver.get("https://www.payback.de/coupons")
