@@ -16,31 +16,16 @@ def element(by, value, parent, timeout=10):
 
 def main():
     if platform.system() == "Windows":
-        user_data_dir = (
-            os.getenv("LOCALAPPDATA"),
-            "Google",
-            "Chrome",
-            "User Data",
-        )
+        user_data_dir = "~\\AppData\\Local\\Google\\Chrome\\User Data"
 
     elif platform.system() == "Linux":
-        user_data_dir = (
-            os.path.expanduser("~"),
-            ".config",
-            "google-chrome",
-        )
+        user_data_dir = "~/.config/google-chrome"
 
     elif platform.system() == "Darwin":
-        user_data_dir = (
-            os.path.expanduser("~"),
-            "Library",
-            "Application Support",
-            "Google",
-            "Chrome",
-        )
+        user_data_dir = "~/Library/Application Support/Google/Chrome"
 
     options = Options()
-    options.add_argument("user-data-dir=" + os.path.join(user_data_dir))
+    options.add_argument("user-data-dir=" + os.path.expanduser(user_data_dir))
 
     service = Service()
     driver = Chrome(options, service)
